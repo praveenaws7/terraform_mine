@@ -1,36 +1,40 @@
+
 provider "aws" {
   region  = "us-east-1"
-
 }
 
-resource "aws_instance" "nginx-server" {
-  ami           = "ami-080e1f13689e07408"
-  instance_type = "t2.small"
-  count = 10
+resource "aws_s3_bucket" "atp-apple" {
+  bucket = "atp-apple1"
+
+  tags = {
+    Name        = "atp"
+    Environment = "Dev"
+  }
 }
 
-resource "aws_iam_user" "iam" {
-  name = "apple"
+resource "aws_iam_user" "atp" {
+  name = "atp-user"
   path = "/system/"
 
   tags = {
-    tag-key = "atp-apple"
+    tag-key = "tag-value"
   }
 }
 
-resource "aws_iam_access_key" "atp-key" {
-  user = aws_iam_user.iam.name
+resource "aws_iam_access_key" "atp" {
+  user = aws_iam_user.atp.name
 }
 
-data "aws_iam_policy_document" "atp-policy" {
+data "aws_iam_policy_document" "atp-apple" {
   statement {
     effect    = "Allow"
     actions   = ["s3:ListBucket"]
-    resources = ["arn:aws:s3:::atp-bucket"]
+    resources = ["arn:aws:s3:::atp-apple1"]
   }
 }
+
 resource "aws_iam_user_policy" "lb_ro" {
-  name   = "apple"
-  user   = aws_iam_user.iam.name
-  policy = data.aws_iam_policy_document.atp-policy.json
+  name   = "atp-resource"
+  user   = aws_iam_user.atp.name
+  policy = data.aws_iam_policy_document.atp-apple.json
 }
