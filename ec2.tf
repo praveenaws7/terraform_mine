@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "changed_modified" {
+resource "aws_s3_bucket" "changed_modifiedagain modified" {
   bucket = "jum08th15"  # Replace with your existing bucket name
   acl    = "private"
 
