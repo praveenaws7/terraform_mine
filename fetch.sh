@@ -1,4 +1,4 @@
-
+#Modified
 # Fetch the public IPs from Terraform output
 public_ips=$(terraform output -json public_ips | jq -r '.[]')
 
