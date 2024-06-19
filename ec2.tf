@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "renamed_new" {
+resource "aws_s3_bucket" "pushing from the feature" {
   bucket = "jum08th15"  # Replace with your existing bucket name
   acl    = "private"
 
